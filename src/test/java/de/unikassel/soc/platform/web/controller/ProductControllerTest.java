@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +28,7 @@ class ProductControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        productController = new ProductController((productService));
+        productController = new ProductController(productService);
         uuid = UUID.randomUUID();
     }
 
@@ -42,7 +41,9 @@ class ProductControllerTest {
         ProductDto productDto = new ProductDto(uuid, "iphone", "nice", 15.0, "Euro");
         productsDto.add(productDto);
         when(productService.getProductsByPriceBetween(from, to)).thenReturn(productsDto);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/product/?from=" + from + "&to=" + to))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/product/")
+                .param("from", from.toString())
+                .param("to", to.toString()))
                 .andExpect(status().isOk());
     }
 }

@@ -71,7 +71,8 @@ class CustomerControllerTest {
         CustomerDto customerDto = new CustomerDto(uuid, "Harald", null);
         customersDto.add(customerDto);
         when(customerService.getCustomersByName(customerDto.getName())).thenReturn(customersDto);
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer/?name=" + customerDto.getName()))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/customer/")
+                .param("name", customerDto.getName()))
                 .andExpect(status().isOk());
     }
 
