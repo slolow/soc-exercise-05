@@ -24,8 +24,8 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<CustomerDto>> getCustomersByName(@RequestParam("name") String customerName){
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<CustomerDto>> getCustomersByName(@PathVariable("name") String customerName){
         return new ResponseEntity<>(customerService.getCustomersByName(customerName), HttpStatus.OK);
         //Comment
     }
