@@ -24,20 +24,19 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomerById(customerId), HttpStatus.OK);
     }
 
-    @GetMapping("/name/{name}")
-    public ResponseEntity<List<CustomerDto>> getCustomersByName(@PathVariable("name") String customerName){
+    @GetMapping("/")
+    public ResponseEntity<List<CustomerDto>> getCustomersByName(@RequestParam("name") String customerName){
         return new ResponseEntity<>(customerService.getCustomersByName(customerName), HttpStatus.OK);
-        //Comment
     }
 
     @PostMapping
-    public ResponseEntity handlePost(@RequestBody @Validated CustomerDto customerDto){
+    public ResponseEntity<HttpHeaders> handlePost(@RequestBody @Validated CustomerDto customerDto){
         CustomerDto savedDto = customerService.saveNewCustomer(customerDto);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/customer/" + savedDto.getId().toString());
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
 
     @PutMapping("/{customerId}")
