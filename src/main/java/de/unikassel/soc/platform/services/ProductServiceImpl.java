@@ -3,10 +3,9 @@ package de.unikassel.soc.platform.services;
 import de.unikassel.soc.platform.domain.Product;
 import de.unikassel.soc.platform.repos.ProductRepo;
 import de.unikassel.soc.platform.web.mappers.ProductMapper;
-import de.unikassel.soc.platform.web.mappers.ProductMapperImpl;
 import de.unikassel.soc.platform.web.model.ProductDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
-    private ProductRepo repo;
-    private ProductMapper mapper = new ProductMapperImpl();
+    private final ProductRepo repo;
+    private final ProductMapper mapper;
 
     @Override
     public ProductDto getProductById(UUID productId) throws NoSuchElementException {
