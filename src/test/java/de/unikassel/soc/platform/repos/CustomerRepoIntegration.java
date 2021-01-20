@@ -4,7 +4,6 @@ import de.unikassel.soc.platform.domain.Customer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -17,6 +16,22 @@ class CustomerRepoIntegration {
 
     @Autowired
     CustomerRepo customerRepo;
+
+    @Test
+    @Transactional
+    void findById() {
+        Customer customer = new Customer();
+        customer.setName("Peter");
+        customer.setProducts(null);
+        customerRepo.save(customer);
+        assertTrue(customerRepo.findById(customer.getId()).isPresent());
+    }
+
+    @Test
+    void save() {
+        customerRepo.save(new Customer(UUID.randomUUID(), "Hans", null));
+        assertEquals(1, customerRepo.findAll().size());
+    }
 
     @Test
     @Transactional
